@@ -26,6 +26,13 @@ public class User {
 
     }
 
+    public User(int anInt, String name, String login, String password, String role) {
+        this.id = anInt;
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.role = role;
+    }
 
     public User(String name, String login, String password, String role) {
         this.name = name;
