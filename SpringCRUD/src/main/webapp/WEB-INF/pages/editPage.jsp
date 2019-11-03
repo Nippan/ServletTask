@@ -26,8 +26,6 @@
     <input type="text" name="name" id="name"><br>
     <label for="password">password</label>
     <input type="password" name="password" id="password"><br>
-    <label for="role">role</label>
-    <input type="text" name="role" id="role"><br>
     <c:if test="${empty user.login}">
         <input type="submit" value="Add new user">
     </c:if>

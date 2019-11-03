@@ -13,7 +13,6 @@
         <th>login</th>
         <th>name</th>
         <th>password</th>
-        <th>role</th>
         <th>action</th>
     </tr>
     <c:forEach var="user" items="${usersList}">
@@ -22,7 +21,6 @@
             <td>${user.login}</td>
             <td>${user.name}</td>
             <td>${user.password}</td>
-            <td>${user.role}</td>
             <td>
                 <a href="/edit/${user.id}">edit</a>
                 <a href="/delete/${user.id}">delete</a>
