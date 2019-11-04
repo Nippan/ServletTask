@@ -1,14 +1,13 @@
 package org.springCRUD.dao;
 
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springCRUD.model.Person;
+import org.springCRUD.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
-import java.util.*;
-
-@Repository
+@Component
 public class UserDAOImpl implements UserDAO {
     private SessionFactory sessionFactory;
 
@@ -19,33 +18,38 @@ public class UserDAOImpl implements UserDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Person> allUsers() {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Person").list();
+    public List<User> allUsers() {
+        Session session = this.sessionFactory.getCurrentSession();
+        return session.createQuery("FROM User").list();
     }
 
     @Override
-    public void add(Person user) {
-        Session session = sessionFactory.getCurrentSession();
+    public void add(User user) {
+        Session session = this.sessionFactory.getCurrentSession();
         session.persist(user);
     }
 
     @Override
-    public void delete(Person user) {
-        Session session = sessionFactory.getCurrentSession();
+    public void delete(User user) {
+        Session session = this.sessionFactory.getCurrentSession();
         session.delete(user);
     }
 
     @Override
-    public void edit(Person user) {
-        Session session = sessionFactory.getCurrentSession();
+    public void edit(User user) {
+        Session session = this.sessionFactory.getCurrentSession();
         session.update(user);
     }
 
     @Override
-    public Person getById(int id) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(Person.class, id);
+    public User getById(Long id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        return (User)session.get(User.class, id);
     }
 
+    @Override
+    public User getByLogin(String login) {
+        Session session = this.sessionFactory.getCurrentSession();
+        return (User)session.createQuery("FROM User WHERE login ='" + login + "'").uniqueResult();
+    }
 }

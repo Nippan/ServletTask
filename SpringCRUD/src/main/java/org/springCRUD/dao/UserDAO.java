@@ -1,14 +1,18 @@
 package org.springCRUD.dao;
 
-
-import org.springCRUD.model.Person;
-
 import java.util.List;
+import org.springCRUD.model.User;
 
 public interface UserDAO {
-    List<Person> allUsers();
-    void add(Person user);
-    void delete(Person user);
-    void edit(Person user);
-    Person getById(int id);
+    List<User> allUsers();
+
+    void add(User var1);
+
+    void delete(User var1);
+
+    void edit(User var1);
+
+    User getById(Long var1);
+
+    User getByLogin(String var1);
 }

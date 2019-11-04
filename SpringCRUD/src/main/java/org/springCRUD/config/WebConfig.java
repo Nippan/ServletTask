@@ -3,20 +3,21 @@ package org.springCRUD.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "org.springCRUD")
-public class WebConfig {
+@ComponentScan("org.springCRUD")
+public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Bean
-    ViewResolver viewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setPrefix("/WEB-INF/pages/");
-        viewResolver.setSuffix(".jsp");
-        return viewResolver;
+    public InternalResourceViewResolver getInternalResourceViewResolver() {
+        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+        resolver.setPrefix("/WEB-INF/jsp/");
+        resolver.setSuffix(".jsp");
+        resolver.setRequestContextAttribute("requestContext");
+        return resolver;
     }
 }
