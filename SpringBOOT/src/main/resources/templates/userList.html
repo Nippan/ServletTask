@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <title>Getting Started: Service Web Content</title>
+</head>
+<body>
+    <h3>All users</h3>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>roles</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item: ${users}">
+                <td><span th:text="${item.username}"/></td>
+                <td><span th:each="role: ${item.roles}" th:text="${role}"/></td>
+                <td><a th:href="@{/user/{id}(id=${item.id})}">edit</a> </td>
+                <td><a th:href="@{/user/delete/{id}(id=${item.id})}">delete</a> </td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <a href="/registration">Add new user</a>
+</body>
+</html>

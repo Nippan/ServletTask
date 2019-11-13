@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+</head>
+<body>
+<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Log Out"/>
+        <span><a href="/user">User list</a></span>
+    </form>
+
+    <form method="post" th:action="@{/index}">
+        <p>Add messages</p>
+        <input type="text" name="text" placeholder="Enter text:"/><br>
+        <input type="text" name="tag" placeholder="Enter tag:"/><br>
+        <input type="submit" value="Send"/>
+    </form>
+
+    <form method="post" th:action="@{/filter}">
+        <p>Filter tags</p>
+        <input type="text" name="filter">
+        <input type="submit" value="Send"/>
+    </form>
+
+    <h3>All messages</h3>
+    <div th:each="item: ${messages}">
+        <b th:text="${item.id}"/>
+        <span th:text="${item.text}"/>
+        <i th:text="${item.tag}"/>
+        <strong th:text="${item.authorName}"/>
+    </div>
+
+</body>
+</html>
