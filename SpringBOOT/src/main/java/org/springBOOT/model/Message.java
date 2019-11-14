@@ -1,4 +1,4 @@
-package org.springBOOT.domain;
+package org.springBOOT.model;
 
 import javax.persistence.*;
 

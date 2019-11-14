@@ -1,7 +1,7 @@
 package org.springBOOT.controller;
 
-import org.springBOOT.domain.Role;
-import org.springBOOT.domain.User;
+import org.springBOOT.model.Role;
+import org.springBOOT.model.User;
 import org.springBOOT.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +34,6 @@ public class RegistrationController {
         user.setRoles(Collections.singleton(Role.valueOf(role)));
         userRepo.save(user);
 
-        return "redirect:/login";
+        return "redirect:/user";
     }
 }

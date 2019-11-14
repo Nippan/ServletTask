@@ -1,6 +1,6 @@
 package org.springBOOT.repos;
 
-import org.springBOOT.domain.User;
+import org.springBOOT.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 
