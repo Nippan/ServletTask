@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no" />
+
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+
+    <title>Admin page</title>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        nav.breadcrumb-item:active card{
+            display: block!important;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid h-100 p-0 d-flex flex-column">
+    <nav class="navbar navbar-dark bg-dark flex-md-nowrap shadow">
+        <span class="navbar-brand col-sm-3 col-md-2 mr-0">Spring BOOT</span>
+        <div class="navbar-text mr-3 text-white">Hello, [[${#httpServletRequest.remoteUser}]]!</div>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Log Out"/>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="row m-0 d-flex flex-fill">
+        <nav class="col-md-2 d-none d-md-block sidebar mt-3">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">User</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 bg-light">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Admin Panel</h1>
+            </div>
+
+            <nav class="breadcrumb mb-0">
+                <a href="/admin" class="breadcrumb-item">Users table</a>
+                <a href="/admin/add" class="breadcrumb-item active">New user</a>
+            </nav>
+
+            <div class="card text-center py-1" id="new_user">
+                <div class="card-block col-md-3 mx-auto">
+                    <div th:if="${message}">
+                        <p th:text="${message}" class="text-danger font-weight-bold"/>
+                    </div>
+                    <form th:action="@{/admin/add}" method="post">
+                        <div class="form-group">
+                            <label for="email" class="font-weight-bold">Email</label>
+                            <input type="email"  name="email" class="form-control"
+                                   autofocus="autofocus" id="email" placeholder="Enter email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="login" class="font-weight-bold">Login</label>
+                            <input type="text"  name="username" class="form-control"
+                                   id="login" placeholder="Login" />
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="font-weight-bold">Password</label>
+                            <input type="password" name="password" class="form-control"
+                                   id="password" placeholder="Password" />
+                        </div>
+                        <div class="form-group">
+                            <label for="role" class="font-weight-bold">Role</label><br>
+                            <select name="role" id="role">
+                                <option>USER</option>
+                                <option>ADMIN</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-7 mx-auto">
+                                    <input type="submit" id="login-submit"
+                                           class="form-control btn btn-primary" value="Add new user" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br>
+        </main>
+    </div>
+</div>
+
+
+<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</body>
+</html>

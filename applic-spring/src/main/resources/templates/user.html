@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no" />
+
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+
+    <title>User page</title>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid h-100 p-0 d-flex flex-column">
+    <nav class="navbar navbar-dark bg-dark flex-md-nowrap shadow">
+        <span class="navbar-brand col-sm-3 col-md-2 mr-0">Spring BOOT</span>
+        <div class="navbar-text mr-3 text-white">Hello, [[${#httpServletRequest.remoteUser}]]!</div>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Log Out"/>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="row m-0 d-flex flex-fill">
+        <nav class="col-md-2 d-none d-md-block sidebar mt-3">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li th:if="${#request.userPrincipal.principal.isAdmin()}" class="nav-item">
+                        <a class="nav-link active" href="/admin">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">User</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 bg-light">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">User Page</h1>
+            </div>
+            <div>Hello, [[${#httpServletRequest.remoteUser}]]!</div>
+        </main>
+    </div>
+</div>
+
+<script type="text/javascript"
+        th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+</body>
+</html>
