@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('#myModal').on('show.bs.modal', function(e) {
         var userId = $(e.relatedTarget).data('object-id');
-        var login = $(e.relatedTarget).data('object-login');
+        var login = $(e.relatedTarget).data('object-name');
         var email = $(e.relatedTarget).data('object-email');
         var pass = $(e.relatedTarget).data('object-pass');
 

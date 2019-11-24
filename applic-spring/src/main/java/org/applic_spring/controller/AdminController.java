@@ -4,7 +4,6 @@ import org.applic_spring.model.Role;
 import org.applic_spring.model.User;
 import org.applic_spring.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,31 +15,26 @@ import java.util.Collections;
 public class AdminController {
 
     @Autowired
-    private UserRepo userRepo;
+    private UserRepo repository;
 
     @GetMapping
-    public String adminPage(Model model){
-        model.addAttribute("users", userRepo.findAll());
-        return "admin";
-    }
-
-    @GetMapping("/add")
-    public String registration() {
-        return "add";
+    public Iterable<User> findAll() {
+        return repository.findAll();
     }
 
     @PostMapping("/add")
     public String addUser(User user, String role, Model model) {
-        User userFromDb = userRepo.findByUsername(user.getUsername());
+        User userFromDb = repository.findByUsername(user.getUsername());
 
         if (userFromDb != null) {
             model.addAttribute("message", "User exists!");
-            return "add";
+            model.addAttribute("users", repository.findAll());
+            return "admin";
+        } else {
+            user.setActive(true);
+            user.setRoles(Collections.singleton(Role.valueOf(role)));
+            repository.save(user);
         }
-
-        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.valueOf(role)));
-        userRepo.save(user);
 
         return "redirect:/admin";
     }
@@ -55,14 +49,14 @@ public class AdminController {
         user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
-        userRepo.save(user);
+        repository.save(user);
 
         return "redirect:/admin";
     }
 
     @GetMapping("/delete/{user}")
     public String userDelete(@PathVariable User user, Model model) {
-        userRepo.delete(user);
+        repository.delete(user);
         return "redirect:/admin";
     }
 
