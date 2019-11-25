@@ -1,41 +1,54 @@
-package org.springCRUD.controller;
+package org.applic_spring.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import org.applic_spring.model.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
-public class LoginController {
+import javax.servlet.http.HttpServletRequest;
+
+@RestController
+public class MainController {
+    private ModelAndView modelAndView = new ModelAndView();
+
+    @GetMapping("/")
+    public ModelAndView getLoginPage(Authentication authentication) {
+        if (authentication != null) {
+            modelAndView.setViewName("redirect: /user");
+            return modelAndView;
+        }
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
 
     @GetMapping("/login")
-    public String getLoginPage (Authentication authentication, ModelMap model, HttpServletRequest request) {
+    public ModelAndView getLoginPage (Authentication authentication, ModelMap model, HttpServletRequest request) {
         if (authentication != null) {
-            //model.addAttribute("user", request.getParameter("name"));
-            return "redirect: /user";
+            modelAndView.setViewName("redirect: /user");
+            return modelAndView;
         }
         if (request.getParameterMap().containsKey("error")) {
             model.addAttribute("error", true);
         }
-        return "login";
-    }
-
-    @GetMapping("/user")
-    public ModelAndView getIndexPage (Authentication authentication, ModelMap model, HttpServletRequest request) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("index");
-        modelAndView.addObject("user", authentication.getName());
+        modelAndView.setViewName("login");
         return modelAndView;
     }
 
-    @GetMapping("/")
-    public String getLoginPage(Authentication authentication) {
-        if (authentication != null) {
-            //model.addAttribute("user", request.getParameter("name"));
-            return "redirect: /user";
-        }
-        return "login";
+    @PostMapping("/login")
+    public void getPrincepal(Authentication authentication, Model model) {
+        User user = (User) authentication.getPrincipal();
+        model.addAttribute("princ", user);
+    }
+
+    @GetMapping("/user")
+    public ModelAndView getUserPage(Authentication authentication) {
+        modelAndView.addObject("user", authentication.getName());
+        modelAndView.setViewName("user");
+        return modelAndView;
     }
 }
