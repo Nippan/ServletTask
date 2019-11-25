@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="content-type" charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no" />
+
+    <link rel="stylesheet" type="text/css"
+          th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.min.css}" />
+
+    <title>Admin page</title>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid h-100 p-0 d-flex flex-column">
+    <nav class="navbar navbar-dark bg-dark flex-md-nowrap shadow">
+        <span class="navbar-brand col-sm-3 col-md-2 mr-0">Spring BOOT</span>
+        <div class="navbar-text mr-3 text-white">Hello, [[${#httpServletRequest.remoteUser}]]!</div>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <form th:action="@{/logout}" method="post">
+                    <input type="submit" value="Log Out"/>
+                </form>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="row m-0 d-flex flex-fill">
+        <nav class="col-md-2 d-none d-md-block sidebar mt-3">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/user">User</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 bg-light">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Admin Panel</h1>
+            </div>
+
+<!--            <nav class="breadcrumb mb-0">-->
+<!--                <a href="/admin" class="breadcrumb-item active">Users table</a>-->
+<!--                <a href="/admin/add" class="breadcrumb-item">New user</a>-->
+<!--            </nav>-->
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                       aria-controls="home"
+                       aria-selected="true">Users table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                       aria-controls="profile"
+                       aria-selected="false">New user</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ROLE</th>
+                                <th>NAME</th>
+                                <th>EMAIL</th>
+                                <th>PASSWORD</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="user: ${users}">
+                                <td><span th:text="${user.id}"/></td>
+                                <td><span th:each="role: ${user.roles}" th:text="${role}"/></td>
+                                <td><span th:text="${user.username}"/></td>
+                                <td><span th:text="${user.email}" /></td>
+                                <td><span th:text="${user.password}" /></td>
+                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"
+                                            th:attr="data-object-id=${user.id},
+                                            data-object-name=${user.username},
+                                            data-object-email=${user.email},
+                                            data-object-pass=${user.password}">Edit</button>
+                                </td>
+                                <td><a class="btn btn-primary" th:href="@{/admin/delete/{id}(id=${user.id})}">delete</a> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane text-center py-1" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="card-block col-md-3 mx-auto">
+                        <div th:if="${message}">
+                            <p th:text="${message}" class="text-danger font-weight-bold"/>
+                        </div>
+                        <form th:action="@{/admin/add}" method="post">
+                            <div class="form-group">
+                                <label for="email" class="font-weight-bold">Email</label>
+                                <input type="email"  name="email" class="form-control"
+                                       autofocus="autofocus" id="email" placeholder="Enter email" />
+                            </div>
+                            <div class="form-group">
+                                <label for="login" class="font-weight-bold">Login</label>
+                                <input type="text"  name="username" class="form-control"
+                                       id="login" placeholder="Login" />
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="font-weight-bold">Password</label>
+                                <input type="password" name="password" class="form-control"
+                                       id="password" placeholder="Password" />
+                            </div>
+                            <div class="form-group">
+                                <label for="role" class="font-weight-bold">Role</label><br>
+                                <select name="role" id="role">
+                                    <option>USER</option>
+                                    <option>ADMIN</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-7 mx-auto">
+                                        <input type="submit" id="login-submit"
+                                               class="form-control btn btn-primary" value="Add new user" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Modal -->
+            <div class="modal fade text-center" id="myModal" tabindex="-1" aria-labelledby="editModalLabel" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel">Edit user</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form th:action="@{/admin/edit}" method="post" role="form">
+                                <div class="form-group">
+                                    <label for="idInput" class="font-weight-bold">ID</label>
+                                    <input type="text"  name="userId" class="form-control" id="idInput" readonly/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="emailInput" class="form-control-label font-weight-bold">Email</label>
+                                    <input type="email"  name="email" class="form-control" autofocus="autofocus" id="emailInput"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="loginInput" class="form-control-label font-weight-bold">Login</label>
+                                    <input type="text"  name="username" class="form-control" id="loginInput"/>
+                                </div>
+                                <div class="form-group">
+                                    <label for="passwordInput" class="form-control-label font-weight-bold">Password</label>
+                                    <input type="password" name="password" class="form-control" id="passwordInput" />
+                                </div>
+                                <div class="form-group mx-auto">
+                                    <input type="submit"
+                                           class="form-control btn btn-primary" value="Edit user" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </main>
+    </div>
+</div>
+
+<!--JavaScript files-->
+<script type="text/javascript" th:src="@{/webjars/jquery/3.4.1/jquery.min.js/}"></script>
+<script type="text/javascript" th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="../js/main.js" th:src="@{../../js/main.js}"></script>
+
+</body>
+</html>
