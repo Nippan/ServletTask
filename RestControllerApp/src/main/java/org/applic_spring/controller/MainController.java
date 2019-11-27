@@ -2,7 +2,6 @@ package org.applic_spring.controller;
 
 import org.applic_spring.model.User;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,5 +1,6 @@
 package org.applic_spring.config;
 
+import org.applic_spring.service.UserDetailServiceImpl;
 import org.applic_spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +17,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    private UserService userService;
+    private UserDetailServiceImpl userService;
 
     @Autowired
     private AuthenticationSuccessHandlerImpl authenticationSuccessHandler;
