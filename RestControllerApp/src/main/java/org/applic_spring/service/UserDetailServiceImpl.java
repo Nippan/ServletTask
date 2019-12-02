@@ -1,6 +1,6 @@
 package org.applic_spring.service;
 
-import org.applic_spring.repos.UserRepo;
+import org.applic_spring.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

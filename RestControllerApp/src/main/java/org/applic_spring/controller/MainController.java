@@ -18,7 +18,7 @@ public class MainController {
     @GetMapping("/")
     public ModelAndView getLoginPage(Authentication authentication) {
         if (authentication != null) {
-            modelAndView.setViewName("redirect: /user");
+            modelAndView.setViewName("/user");
             return modelAndView;
         }
         modelAndView.setViewName("login");
@@ -28,7 +28,7 @@ public class MainController {
     @GetMapping("/login")
     public ModelAndView getLoginPage (Authentication authentication, ModelMap model, HttpServletRequest request) {
         if (authentication != null) {
-            modelAndView.setViewName("redirect: /user");
+            modelAndView.setViewName("/user");
             return modelAndView;
         }
         if (request.getParameterMap().containsKey("error")) {
@@ -39,7 +39,7 @@ public class MainController {
     }
 
     @PostMapping("/login")
-    public void getPrincepal(Authentication authentication, Model model) {
+    public void getPrinc(Authentication authentication, Model model) {
         User user = (User) authentication.getPrincipal();
         model.addAttribute("princ", user);
     }

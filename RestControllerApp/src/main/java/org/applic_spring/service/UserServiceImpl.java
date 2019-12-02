@@ -2,7 +2,7 @@ package org.applic_spring.service;
 
 import org.applic_spring.model.Role;
 import org.applic_spring.model.User;
-import org.applic_spring.repos.UserRepo;
+import org.applic_spring.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,8 +21,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByName(String name) {
-        return userRepo.findByUsername(name);
+    public User getById(Long id) {
+        return userRepo.findById(id).get();
     }
 
     @Override
@@ -33,11 +33,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void editUser(User user, String name, String email, String pass) {
-        user.setUsername(name);
-        user.setEmail(email);
-        user.setPassword(pass);
+    public User editUser(Long id, User userDetails) {
+        User user = getById(id);
+        user.setUsername(userDetails.getUsername());
+        user.setEmail(userDetails.getEmail());
+        user.setPassword(userDetails.getPassword());
         userRepo.save(user);
+        return user;
     }
 
     @Override
