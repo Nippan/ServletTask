@@ -26,6 +26,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByName(String name) {
+        return userRepo.findByUsername(name);
+    }
+
+    @Override
     public void addUser(User user, String role) {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.valueOf(role)));

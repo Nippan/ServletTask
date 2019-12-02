@@ -4,6 +4,7 @@ $(function () {
 const html = $('.table');
 
 function getTable() {
+    reset();
     $.getJSON('/admin/users', function (users) {
         users.forEach(function (user) {
             let userID = user['id'];
@@ -75,6 +76,6 @@ function getTable() {
     });
 }
 
-// function reset() {
-//     $('.table').val("");
-// }
+function reset() {
+    $('.table_tr').html("");
+}

@@ -42,6 +42,11 @@ public class AdminRestController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
+        User userFromDb = userService.getUserByName(user.getUsername());
+        if (userFromDb != null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         userService.addUser(user, "USER");
         logger.info(user.toString() + " - Created");
         return new ResponseEntity<>(user, HttpStatus.OK);

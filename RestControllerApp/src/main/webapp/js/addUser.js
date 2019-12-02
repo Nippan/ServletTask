@@ -19,10 +19,10 @@ $(function () {
             dataType : 'json',
             success:function () {
                 alert(user.username + ' - added');
-                location.reload();
+                getTable();
             },
             error : function(e) {
-                $("#createUser").html("<strong>Error</strong>");
+                alert(user.username + ' - is Exist!');
                 console.log("ERROR: ", e);
             }
         });
@@ -33,7 +33,6 @@ $(function () {
         $("#login").val("");
         $("#email").val("");
         $("#password").val("");
-        $('#roleUser').val("");
     }
 
 });
