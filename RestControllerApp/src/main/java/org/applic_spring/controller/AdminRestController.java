@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
 
 import java.util.List;
 
@@ -22,31 +20,19 @@ public class AdminRestController {
 
     private static final Logger logger = LoggerFactory.getLogger(User.class);
 
-    @GetMapping
-    public ModelAndView getAdmin() {
-        ModelAndView model = new ModelAndView();
-        model.addObject("users", userService.getUsers());
-        model.setViewName("admin");
-        return model;
-    }
-
     @GetMapping("/users")
     public List<User> getAll() {
-        return userService.getUsers();
+        List<User> users = userService.getUsers();
+        return users;
     }
 
-    @GetMapping("/{id}")
-    public User getUser(@PathVariable(value = "id") Long userID) {
-        return userService.getById(userID);
+    @GetMapping("/{name}")
+    public User getUser(@PathVariable(value = "name") String userName) {
+        return userService.getUserByName(userName);
     }
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        User userFromDb = userService.getUserByName(user.getUsername());
-        if (userFromDb != null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
         userService.addUser(user, "USER");
         logger.info(user.toString() + " - Created");
         return new ResponseEntity<>(user, HttpStatus.OK);
