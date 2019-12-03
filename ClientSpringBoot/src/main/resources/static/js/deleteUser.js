@@ -1,7 +1,7 @@
 function deleteUser(id){
     $.ajax({
         type:'DELETE',
-        url:'http://localhost:8080/admin/' + id,
+        url:'http://localhost:8082/admin/' + id,
         success:function () {
             alert('User deleted');
             getTable();
