@@ -21,7 +21,7 @@
 <div class="container-fluid h-100 p-0 d-flex flex-column">
     <nav class="navbar navbar-dark bg-dark flex-md-nowrap shadow">
         <span class="navbar-brand col-sm-3 col-md-2 mr-0">Spring BOOT</span>
-        <div class="navbar-text mr-3 text-white">Hello, USER!</div>
+        <div class="navbar-text mr-3 text-white">Hello, [[${#httpServletRequest.remoteUser}]]!</div>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
                 <form th:action="@{/logout}" method="post">
@@ -49,7 +49,7 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">User Page</h1>
             </div>
-            <div>Hello!</div>
+            <div>Hello, [[${#httpServletRequest.remoteUser}]]!</div>
         </main>
     </div>
 </div>

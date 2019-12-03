@@ -19,7 +19,7 @@
 <div class="container-fluid h-100 p-0 d-flex flex-column">
     <nav class="navbar navbar-dark bg-dark flex-md-nowrap shadow">
         <span class="navbar-brand col-sm-3 col-md-2 mr-0">Spring BOOT</span>
-        <div class="navbar-text mr-3 text-white">Hello,!</div>
+        <div class="navbar-text mr-3 text-white">Hello, [[${#httpServletRequest.remoteUser}]]!</div>
         <ul class="navbar-nav px-3">
             <li class="nav-item text-nowrap">
                 <form th:action="@{/logout}" method="post">

@@ -19,6 +19,10 @@ public class RestClient {
         return Arrays.stream(restTemplate.getForObject(GET_ADMIN_URL, User[].class)).collect(Collectors.toList());
     }
 
+    public User getUserByName(String name) {
+        return restTemplate.getForObject(GET_ADMIN_PAGE + name, User.class);
+    }
+
     //create user
     public User addUser(User user) {
         return restTemplate.postForObject(GET_ADMIN_PAGE, user, User.class);

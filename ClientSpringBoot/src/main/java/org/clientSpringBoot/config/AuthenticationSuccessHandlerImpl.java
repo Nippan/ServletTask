@@ -1,5 +1,6 @@
-package org.applic_spring.config;
+package org.clientSpringBoot.config;
 
+import org.clientSpringBoot.model.Role;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -21,5 +22,6 @@ public class AuthenticationSuccessHandlerImpl implements AuthenticationSuccessHa
         } else {
             httpServletResponse.sendRedirect("/admin");
         }
+
     }
 }
